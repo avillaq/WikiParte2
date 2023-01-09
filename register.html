@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="./styles/general.css">
+    <link rel="stylesheet" href="./styles/loginRegister.css">
+    <title>InmaduroDev Store</title>
+</head>
+<body>
+    
+    <div class="wrap">
+        <div class="container">
+            <h1>Crear cuenta</h1>
+            <hr>
+            <form action="./cgi-bin/register.pl" method="post" class="form" style="height: 350px;">
+                <input type="text" class="itemCampo" name="newfirstname" placeholder="Nombre" required>
+                <input type="text" class="itemCampo" name="newlastname" placeholder="Apellido" required>
+                <input type="text" class="itemCampo" name="newname" placeholder="Nuevo usuario" required>
+                <input type="password" class="itemCampo" name="newpassword" placeholder="Contraseña" required>
+                <input type="submit" class="itemSubmit" value="Nueva cuenta">
+            </form>
+            <a href="index.html">Iniciar Sesion</a>
+            <hr>
+        </div>
+        
+    </div>
+</body>
+</html>
