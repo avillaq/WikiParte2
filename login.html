@@ -5,19 +5,18 @@
     <link rel="stylesheet" href="./styles/general.css">
     <link rel="stylesheet" href="./styles/loginRegister.css">
 
-    <title>InmaduroDev Store</title>
+    <title>Login</title>
 </head>
 <body>
     <div class="wrap">
         <div class="container">
             <h1>Login</h1>
             <hr>
-            <form action="./cgi-bin/login.pl" method="post" class="form">
+            <form action="./cgi-bin/login.pl" method="get" class="form">
                 <input class="itemCampo" type="text" name="name" placeholder="Usuario" required>
                 <input class="itemCampo" type="password" name="password" placeholder="Contraseña" required>
                 <input class="itemSubmit" type="submit" value="Ingresar">    
             </form>
-            <a href="register.html">Crear una nueva cuenta</a>
             <hr>
         </div>
         
