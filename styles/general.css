@@ -1,15 +1,18 @@
-*{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+
 body {
-    background: rgb(33, 175, 177);
+    background: #cdffff;
     font-family: 'Open Sans', sans-serif;
 }
-
 .wrap{
-    max-width: 1100px;
-    width: 100%;
+    width: 70%;
     margin: auto;
+}
+a {
+    padding: 8px;
+    margin-right: 20px;
+    background: crimson;
+
+    color: white;
+    text-decoration: none;
+    cursor: pointer;
 }

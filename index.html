@@ -1,26 +1,55 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="./styles/general.css">
-    <link rel="stylesheet" href="./styles/loginRegister.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>InmaduroDev Store</title>
+    <link rel="stylesheet" href="styles/general.css">
+    <link rel="stylesheet" href="styles/index.css">
+    <title>Wiki</title>
 </head>
+
 <body>
     <div class="wrap">
-        <div class="container">
-            <h1>Login</h1>
-            <hr>
-            <form action="./cgi-bin/login.pl" method="post" class="form">
-                <input class="itemCampo" type="text" name="name" placeholder="Usuario" required>
-                <input class="itemCampo" type="password" name="password" placeholder="Contraseña" required>
-                <input class="itemSubmit" type="submit" value="Ingresar">    
-            </form>
-            <a href="register.html">Crear una nueva cuenta</a>
-            <hr>
-        </div>
+        
+        <h1>Lista de acciones</h1>
+
+        <form action="./cgi-bin/entrada.pl">
+            <input type="hidden" name="entrada" value="login">
+            <input type="submit" value="Login">
+        </form>
+        <form action="./cgi-bin/entrada.pl">
+            <input type="hidden" name="entrada" value="register">
+            <input type="submit" value="Register">
+        </form>
+        <form action="./cgi-bin/entrada.pl">
+            <input type="hidden" name="entrada" value="new">
+            <input type="submit" value="New Page">
+        </form>
+        <form action="./cgi-bin/entrada.pl">
+            <input type="hidden" name="entrada" value="list">
+            <input type="submit" value="List">
+        </form>
+        <form action="./cgi-bin/entrada.pl">
+            <input type="hidden" name="entrada" value="view">
+            <input type="submit" value="View">
+        </form>
+        <form action="./cgi-bin/entrada.pl">
+            <input type="hidden" name="entrada" value="delete">
+            <input type="submit" value="Delete">
+        </form>
+        <form action="./cgi-bin/entrada.pl">
+            <input type="hidden" name="entrada" value="article">
+            <input type="submit" value="Article">
+        </form>
+        <form action="./cgi-bin/entrada.pl">
+            <input type="hidden" name="entrada" value="update">
+            <input type="submit" value="Update">
+        </form>
         
     </div>
+
 </body>
+
 </html>
