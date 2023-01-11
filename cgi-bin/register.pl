@@ -14,9 +14,18 @@ my $dbh = DBI->connect($dsn, "Alex", "") or die "No se pudo conectar";
     
 my $sth = $dbh->prepare("INSERT INTO users VALUES(?,?,?,?)");
 $sth->execute($newname, $newpassword, $newlastname, $newfirstname);
-    
+
+$sth->finish;
 $dbh->disconnect;
 
-print "Location: ../index.html \n\n";
+print $q->header('text/xml');    
+print<<XML;
+<?xml version='1.0' encoding='utf-8'?>
+    <user>
+        <owner>$newname</owner>
+        <firstName>$newfirstname</firstName>
+        <lastName>$newlastname</lastName>
+    </user>
+XML
 
 

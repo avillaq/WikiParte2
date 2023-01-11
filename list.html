@@ -1,17 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles/general.css">
+    <link rel="stylesheet" href="styles/new.css">
+
 
     <title>List</title>
 </head>
+
 <body>
     <div class="wrap">
-        <div class="container">
+        <form action="./cgi-bin/new.pl" method="get">
+            <label>Nombre de usuario</label>
+            <input class="inputText" type="text" name="usuario"><br>
 
-        </div>
+            <input class="inputSubmit" type="submit" value="Enviar">
+        </form>
     </div>
 </body>
+
 </html>
