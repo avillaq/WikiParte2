@@ -16,79 +16,23 @@ $sth->execute($usuario);
 my @misTitulos;
 my $i = 0;
 while(my @array = $sth->fetchrow_array()){
-  $misTitulos[$i] = $array[$i];
+  $misTitulos[$i] = $array[0];
   $i++;
 }
 
-if(@misTitulos == 0){
-  
-}else{
-
-}
-
-
-
-=pot
-if (@array == 0) {
-
-}
-else {
-  print @array;
-}
-
-my @titulo;
-my $i = 0;
-
-my $sth = $dbh->prepare("select * from paginas");
-$sth->execute();
-
-while(my @row = $sth->fetchrow_array){
-  $titulo[$i] = $row[0];
-  $i++;
-}
 $sth->finish;
 $dbh->disconnect;
 
-my $funtion = listaTitulos(@titulo);
-
+my $titulosXML = "";
+if(@misTitulos != 0){
+  foreach my $m(@misTitulos){
+      $titulosXML .= "<article><owner>$usuario</owner><title>$m</title></article>";
+  }
+}
 print $q->header('text/xml');    
 print<<XML;
 <?xml version='1.0' encoding='utf-8'?>
-    <article>
-        <title>$titulo</title>
-        <text>$texto</text>
-    </article>
+    <articles>
+      $titulosXML
+    </articles>
 XML
-
-
-sub listaTitulos(){
-  my $lista="";
-  foreach my $t(@_){
-    $lista = $lista."<li>
-    <div class='item'>
-
-    <label>$t</label>
-
-    <form action='./view.pl'>
-    	<input type='hidden' name='title' value='$t'>
-	    <input type='submit' value='Ver'>
-    </form>
-
-    <form action='./edit.pl'>
-      <input type='hidden' name='title' value='$t'>
-	    <input type='submit' value='Editar'>
-    </form>
-    
-    <form action='./delete.pl'>
-    	<input type='hidden' name='title' value='$t'>
-	    <input type='submit' value='X'>
-    </form>
-
-    
-    </div>
-    
-    </li>";
-  }
-  return $lista;
-}
-=cut
