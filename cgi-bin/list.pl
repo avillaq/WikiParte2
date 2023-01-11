@@ -5,9 +5,36 @@ use CGI;
 use DBI;
 
 my $q = CGI->new;
+my $usuario = $q->param('usuario');
 
-my $dsn = "DBI:mysql:database=datospagina;host=127.0.0.1";
+my $dsn = "DBI:mysql:database=datospaginaxml;host=127.0.0.1";
 my $dbh = DBI->connect($dsn, "Alex", "") or die "No se pudo conectar";
+
+my $sth = $dbh->prepare("select title from articles where owner = ?");
+$sth->execute($usuario);
+
+my @misTitulos;
+my $i = 0;
+while(my @array = $sth->fetchrow_array()){
+  $misTitulos[$i] = $array[$i];
+  $i++;
+}
+
+if(@misTitulos == 0){
+  
+}else{
+
+}
+
+
+
+=pot
+if (@array == 0) {
+
+}
+else {
+  print @array;
+}
 
 my @titulo;
 my $i = 0;
@@ -24,36 +51,15 @@ $dbh->disconnect;
 
 my $funtion = listaTitulos(@titulo);
 
-print $q->header('text/html');
-print<<HTML;
-<!DOCTYPE html>
-<html>
-<head>
-     <title>Wikipedia 0.1</title>
-		<link rel="stylesheet" href="../styles/general.css">
-  	<link rel="stylesheet" href="../styles/list.css">
+print $q->header('text/xml');    
+print<<XML;
+<?xml version='1.0' encoding='utf-8'?>
+    <article>
+        <title>$titulo</title>
+        <text>$texto</text>
+    </article>
+XML
 
-</head>
-<body>
-    <div class="wrap">
-      <h1>Nuestras paginas de wiki</h1>
-
-      <div class="list">
-        <ul>$funtion</ul>
-      </div>
-
-      <hr>
-
-      <div class="NavigationButton">
-        <a href="../new.html">Nueva Pagina</a><br>
-        <a href="../index.html">Volver al Inicio</a>
-      </div>
-      
-    </div>
-    
-</body>
-</html>
-HTML
 
 sub listaTitulos(){
   my $lista="";
@@ -85,3 +91,4 @@ sub listaTitulos(){
   }
   return $lista;
 }
+=cut
