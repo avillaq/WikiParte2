@@ -6,18 +6,34 @@ use DBI;
 
 my $q = CGI->new;
 
-my $dsn = "DBI:mysql:database=datospagina;host=127.0.0.1";
+my $dsn = "DBI:mysql:database=datospaginaxml;host=127.0.0.1";
 my $dbh = DBI->connect($dsn, "Alex", "") or die "No se pudo conectar";
 
-my $t = $q->param('title');
+my $titulo = $q->param('titulo');
+my $usuario = $q->param('usuario');
 
-my $sth = $dbh->prepare("delete from paginas where title=?");
-$sth->execute($t);
+my $sth = $dbh->prepare("select text from articles where title=? and owner=?");
+$sth->execute($titulo, $usuario);
+
+my @array = $sth->fetchrow_array();
+#Si el usuario y titulo existe, se procedera a borrar sus datos
+#Si no existe, devolveremos un xml vacio
+if (@array != 0) {
+    $sth = $dbh->prepare("delete from articles where title=? and owner=?");
+    $sth->execute($titulo, $usuario);
+}else{
+    $usuario = "";
+    $titulo = "";
+}
 
 $sth->finish;
 $dbh->disconnect;
 
-print "Location: ./list.pl \n\n";
-
-
-
+print $q->header('text/xml');    
+print<<XML;
+<?xml version='1.0' encoding='utf-8'?>
+    <article>
+        <owner>$usuario</owner>
+        <title>$titulo</title>
+    </article>
+XML

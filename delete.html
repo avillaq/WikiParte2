@@ -4,14 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles/general.css">
+    <link rel="stylesheet" href="styles/new.css">
 
     <title>Delete</title>
 </head>
 <body>
     <div class="wrap">
-        <div class="container">
+        <form action="./cgi-bin/delete.pl" method="get">
+            <label>Nombre de usuario</label>
+            <input class="inputText" type="text" name="usuario">
 
-        </div>
+            <label>Titulo</label>
+            <input class="inputText" type="text" name="titulo"><br>
+
+            <input class="inputSubmit" type="submit" value="Enviar">
+        </form>
     </div>
 </body>
 </html>

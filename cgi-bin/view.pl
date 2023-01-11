@@ -5,13 +5,15 @@ use CGI;
 use DBI;
 my $q = CGI->new;
 
-my $dsn = "DBI:mysql:database=datospagina;host=127.0.0.1";
+my $dsn = "DBI:mysql:database=datospaginaxml;host=127.0.0.1";
 my $dbh = DBI->connect($dsn, "Alex", "") or die "No se pudo conectar";
 
-my $titulo = $q->param('title');
+my $usuario = $q->param('usuario');
+my $titulo = $q->param('titulo');
 my $texto;
-my $sth = $dbh->prepare("select text from paginas where title=?");
-$sth->execute($titulo);
+
+my $sth = $dbh->prepare("select text from articles where title=? AND owner=?");
+$sth->execute($titulo, $usuario);
 
 while(my @row = $sth->fetchrow_array){
 	$texto = $row[0];
@@ -60,16 +62,11 @@ print<<HTML;
 <html>
 <head>
      <link rel="stylesheet" href="../styles/general.css">
-     <link rel="stylesheet" href="../styles/grabada.css">
      <title>Wikipedia 0.1</title>
 </head>
 <body>
      <div class="wrap">
-          <div class="TextoContent">
-                $final
-          </div>
-
-          <a href="./list.pl">Retroceder</a><br>
+           $final
      </div>
     
 </body>
