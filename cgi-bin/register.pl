@@ -11,7 +11,10 @@ my $newfirstname = $q->param('newfirstname');
 
 my $dsn = "DBI:mysql:database=datospaginaxml;host=127.0.0.1";
 my $dbh = DBI->connect($dsn, "Alex", "") or die "No se pudo conectar";
-    
+
+#Antes de crear un nuevo registro, podriamos comprobar que los datos
+#no esten vacios. En ese caso, tendriamos que hacer pequeñas modificaciones
+#a la salida de xml (desde la linea 24) similar a los otros scripts.
 my $sth = $dbh->prepare("INSERT INTO users VALUES(?,?,?,?)");
 $sth->execute($newname, $newpassword, $newlastname, $newfirstname);
 

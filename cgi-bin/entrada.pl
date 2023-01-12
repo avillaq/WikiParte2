@@ -32,7 +32,7 @@ if ($entrada eq "login") {
                 <br>";
 }
 elsif ($entrada eq "register") {
-    $form = "<form action='./register.pl' method='post' style='height: 350px;'>
+    $form = "<form action='./register.pl' method='post'>
                 <label>Nombre</label>
                 <input type='text' class='inputText' name='newfirstname' required>
                 
@@ -49,59 +49,59 @@ elsif ($entrada eq "register") {
 elsif ($entrada eq "new") {
     $form = "<form action='./new.pl' method='post'>
             <label>Titulo</label>
-            <input class='inputText' type='text' name='titulo'>
+            <input class='inputText' type='text' name='titulo' required>
 
             <label>Texto</label>
-            <textarea class='inputTextArea' name='texto' rows='8'></textarea>
+            <textarea class='inputTextArea' name='texto' rows='8' required></textarea>
 
             <label>Nombre de usuario</label>
-            <input class='inputText' type='text' name='usuario'><br>
+            <input class='inputText' type='text' name='usuario' required><br>
 
             <input type='hidden' name='esNuevo' value='true'>";
 }
 elsif ($entrada eq "list") {
     $form = "<form action='./list.pl' method='post'>
             <label>Nombre de usuario</label>
-            <input class='inputText' type='text' name='usuario'>
+            <input class='inputText' type='text' name='usuario' required>
             <br>";
 }
 elsif ($entrada eq "view") {
     $form = "<form action='./view.pl' method='post'>
             <label>Nombre de usuario</label>
-            <input class='inputText' type='text' name='usuario'>
+            <input class='inputText' type='text' name='usuario' required>
 
             <label>Titulo</label>
-            <input class='inputText' type='text' name='titulo'>
+            <input class='inputText' type='text' name='titulo' required>
             <br>";
 }
 elsif ($entrada eq "delete") {
     $form = "<form action='./delete.pl' method='post'>
             <label>Nombre de usuario</label>
-            <input class='inputText' type='text' name='usuario'>
+            <input class='inputText' type='text' name='usuario' required>
 
             <label>Titulo</label>
-            <input class='inputText' type='text' name='titulo'>
+            <input class='inputText' type='text' name='titulo' required>
             <br>";
 }
 elsif ($entrada eq "article") {
     $form = "<form action='./article.pl' method='post'>
             <label>Nombre de usuario</label>
-            <input class='inputText' type='text' name='usuario'>
+            <input class='inputText' type='text' name='usuario' required>
 
             <label>Titulo</label>
-            <input class='inputText' type='text' name='titulo'>
+            <input class='inputText' type='text' name='titulo' required>
             <br>";
 }
 elsif ($entrada eq "update") {
     $form = "<form action='./new.pl' method='post'>
             <label>Titulo</label>
-            <input class='inputText' type='text' name='titulo'>
+            <input class='inputText' type='text' name='titulo' required>
 
             <label>Texto</label>
-            <textarea class='inputTextArea' name='texto' rows='8'></textarea>
+            <textarea class='inputTextArea' name='texto' rows='8' required></textarea>
 
             <label>Nombre de usuario</label>
-            <input class='inputText' type='text' name='usuario'><br>
+            <input class='inputText' type='text' name='usuario' required><br>
 
             <input type='hidden' name='esNuevo' value='false'>";
 }
@@ -110,6 +110,7 @@ print<<HTML;
             $form
             <input class="inputSubmit" type="submit" value="Enviar">
         </form>
+        <a href="../index.html">Atras</a>
     </div>
 </body>
 </html>

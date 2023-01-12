@@ -10,58 +10,51 @@ my $texto = $q->param('texto');
 my $usuario = $q->param('usuario');
 my $isNuevo = $q->param('esNuevo');
 
-##Conexion con la base de datos###################
-
 my $dsn = "DBI:mysql:database=datospaginaxml;host=127.0.0.1";
 my $dbh = DBI->connect($dsn, "Alex", "") or die "No se pudo conectar";
 
 my $sth = $dbh->prepare("Select userName from users where userName=?");
 $sth->execute($usuario);
 
-#Combrobamos que el usuario ingresado exista en la tabla users
 my @array = $sth->fetchrow_array();
-if (@array == 0) {
-    $texto = "";
-    $titulo = "";
-}
-else {
-    #Añadiremos un nuevo articulo con "true"
+my $contenido = "";
+#Combrobamos que el usuario ingresado exista en la tabla users
+if (@array != 0) {
+   #Añadiremos un nuevo articulo con "true"
     if($isNuevo eq "true"){
         $sth = $dbh->prepare("INSERT INTO articles VALUES(?,?,?)");
         $sth->execute($titulo,$usuario,$texto);
-
+        
+        $contenido = "<title>$titulo</title>
+                    <text>$texto</text>";
     }
     #Si queremos actualizar el texto con "false"
-    else{
-        #Comprobamos que el usuario y el titulo existan
+    elsif($isNuevo eq "false"){
+        #Existe el caso de que se ingrese usuarios que no tengan ningun articulo en la tabla articles,
+        # entonces no habria nada que actualizar.
+        #Es necesario comprobar que el usuario tenga algun articulo en la tabla articles
         $sth = $dbh->prepare("select text from articles where title=? and owner=?");
         $sth->execute($titulo,$usuario);
         my @array_2 = $sth->fetchrow_array();
-        if (@array_2 == 0){
-            $texto = "";
-            $titulo = "";
-        }
+
         #Si existen, se procedera a actualizar
-        else {
+        if (@array_2 != 0){
             $sth = $dbh->prepare("UPDATE articles SET text=? where title=? and owner=?");
             $sth->execute($texto,$titulo,$usuario);
+
+            $contenido = "<title>$titulo</title>
+                    <text>$texto</text>";
         }
-        
     }
 }
 $sth->finish;
 $dbh->disconnect;
 
-##Fin de la conexion ####################
-
-my $newTexto = $texto;
-$newTexto =~ s/\n/<br>/g;
 
 print $q->header('text/xml');    
 print<<XML;
 <?xml version='1.0' encoding='utf-8'?>
     <article>
-        <title>$titulo</title>
-        <text>$texto</text>
+        $contenido
     </article>
 XML

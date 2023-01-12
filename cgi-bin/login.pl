@@ -16,22 +16,20 @@ my @array = $sth->fetchrow_array;
 $sth->finish();
 $dbh->disconnect;
 
-my $firstname = $array[0];
-my $lastname = $array[1];
-
-#Si el array no tiene elementos, entonces no existe el usuario
-if(@array == 0) {
-    $name="";
-    $firstname="";
-    $lastname="";
+#Si el array tiene elementos, entonces existe el usuario
+#$array[0] contiene al nombre
+#$array[1] contiene al apellido
+my $contenido = "";
+if(@array != 0) {
+    $contenido = "<owner>$name</owner>
+        <firstName>$array[0]</firstName>
+        <lastName>$array[1]</lastName>";
 }
 
 print $q->header('text/xml');    
 print<<XML;
 <?xml version='1.0' encoding='utf-8'?>
     <user>
-        <owner>$name</owner>
-        <firstName>$firstname</firstName>
-        <lastName>$lastname</lastName>
+        $contenido
     </user>
 XML
