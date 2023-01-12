@@ -10,19 +10,19 @@ my $dbh = DBI->connect($dsn, "Alex", "") or die "No se pudo conectar";
 
 my $usuario = $q->param('usuario');
 my $titulo = $q->param('titulo');
-my $texto;
 
 my $sth = $dbh->prepare("select text from articles where title=? AND owner=?");
 $sth->execute($titulo, $usuario);
 
+my $texto;
 while(my @row = $sth->fetchrow_array){
 	$texto = $row[0];
 }
 $sth->finish;
 $dbh->disconnect;
-my $final = "";
 
 my $text = $texto;
+my $final = "";
 $text =~ s/\n/ /g;
 if($text =~ /######([a-zA-Z\t\h]+)/) {
      $final .= "<h6>$1</h6><br>";
@@ -68,7 +68,6 @@ print<<HTML;
      <div class="wrap">
            $final
      </div>
-    
 </body>
 </html>
 HTML
