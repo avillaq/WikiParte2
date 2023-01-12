@@ -18,19 +18,35 @@ my $dbh = DBI->connect($dsn, "Alex", "") or die "No se pudo conectar";
 my $sth = $dbh->prepare("Select userName from users where userName=?");
 $sth->execute($usuario);
 
+#Combrobamos que el usuario ingresado exista en la tabla users
 my @array = $sth->fetchrow_array();
 if (@array == 0) {
     $texto = "";
     $titulo = "";
 }
 else {
-
+    #Añadiremos un nuevo articulo con "true"
     if($isNuevo eq "true"){
         $sth = $dbh->prepare("INSERT INTO articles VALUES(?,?,?)");
         $sth->execute($titulo,$usuario,$texto);
-    }else{
-        $sth = $dbh->prepare("UPDATE articles SET text=? where title=?");
-        $sth->execute($texto,$titulo);
+
+    }
+    #Si queremos actualizar el texto con "false"
+    else{
+        #Comprobamos que el usuario y el titulo existan
+        $sth = $dbh->prepare("select text from articles where title=? and owner=?");
+        $sth->execute($titulo,$usuario);
+        my @array_2 = $sth->fetchrow_array();
+        if (@array_2 == 0){
+            $texto = "";
+            $titulo = "";
+        }
+        #Si existen, se procedera a actualizar
+        else {
+            $sth = $dbh->prepare("UPDATE articles SET text=? where title=? and owner=?");
+            $sth->execute($texto,$titulo,$usuario);
+        }
+        
     }
 }
 $sth->finish;
