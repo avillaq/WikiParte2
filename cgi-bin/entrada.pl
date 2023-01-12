@@ -21,6 +21,7 @@ print<<HTML;
 HTML
 my $form="";
 
+##Las siguientes lineas pueden ser reducidas un poco mas, ya que hay codigo que se repite 
 if ($entrada eq "login") {
     $form="<form action='./login.pl' method='post'>
                 <label>Usuario</label>
@@ -29,8 +30,6 @@ if ($entrada eq "login") {
                 <label>Contrasena</label>
                 <input class='inputText' type='password' name='password' required>
                 <br>";
-                
-
 }
 elsif ($entrada eq "register") {
     $form = "<form action='./register.pl' method='post' style='height: 350px;'>
