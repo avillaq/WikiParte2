@@ -23,16 +23,16 @@ while(my @array = $sth->fetchrow_array()){
 $sth->finish;
 $dbh->disconnect;
 
-my $titulosXML = "";
+my $contenido = "";
 if(@misTitulos != 0){
-  foreach my $m(@misTitulos){
-      $titulosXML .= "<article><owner>$usuario</owner><title>$m</title></article>";
+  foreach my $j(@misTitulos){
+      $contenido .= "<article><owner>$usuario</owner><title>$j</title></article>";
   }
 }
 print $q->header('text/xml');    
 print<<XML;
 <?xml version='1.0' encoding='utf-8'?>
     <articles>
-      $titulosXML
+      $contenido
     </articles>
 XML
