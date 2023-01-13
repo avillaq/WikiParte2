@@ -14,48 +14,57 @@ my $titulo = $q->param('titulo');
 my $sth = $dbh->prepare("select text from articles where title=? AND owner=?");
 $sth->execute($titulo, $usuario);
 
-my $texto;
-while(my @row = $sth->fetchrow_array){
-	$texto = $row[0];
-}
+my $contenido = "";
+my @array = $sth->fetchrow_array();
+
 $sth->finish;
 $dbh->disconnect;
 
-my $text = $texto;
-my $final = "";
-$text =~ s/\n/ /g;
-if($text =~ /######([a-zA-Z\t\h]+)/) {
-     $final .= "<h6>$1</h6><br>";
-}
-elsif($text =~ /##([a-zA-Z\t\h]+)/) {
-     $final .= "<h2>$1</h2><br>";
-}
-elsif($text =~ /#([a-zA-Z\t\h]+)/) {
-     $final .= "<h1>$1</h1><br>";
-}
-if($text =~ /\*\*\*([a-zA-Z\t\h]+)\*\*\*/) {
-     $final .= "<p><strong><em>$1</em></strong></p><br>";     
-}
-elsif($text =~ /\*\*([a-zA-Z\t\h]+)\*\*/) {
-     $final .= "<p><strong>$1</strong></p><br>";     
-}
-elsif($text =~ /\*([a-zA-Z\t\h]+)\*/) {
-     $final .= "<p><em>$1</em></p><br>";     
-}
+if (@array != 0) {
+     my $text = $array[0];
 
-if($text =~ /~~([a-zA-Z\t\h]+)~~/) {
-     $final .= "<p><del>$1</del></p><br>";     
-}
-if($text =~ /\*\*([a-zA-Z\t\h]+)_([a-zA-Z\t\h]+)_([a-zA-Z\t\h]+)\*\*/) {
-     $final .= "<p><strong>$1<em>$2</em>$3</strong></p><br>";     
-}
-if($text =~ /``` ([a-zA-Z\t\h]+)```/) {
-     $final .= "<p><code>$1</code></p><br>";     
-}
-if($text =~ /\[([a-zA-Z\t\h]+)\]\(([a-zA-Z\t\h\:\.\/]+)\)/) {
-     $final .= "<p><a href='$2'>$1</a></p><br>";     
-}
+     $text =~ s/\n/ /g;
 
+     #FALLA: Si el texto tiene 1 #  o  2 # , siempre entrara al primer if
+     if($text =~ /######([a-zA-Z\t\h]+)/) {
+          $contenido .= "<h6>$1</h6>";
+     }
+     elsif($text =~ /##([a-zA-Z\t\h]+)/) {
+          $contenido .= "<h2>$1</h2>";
+     }
+     elsif($text =~ /#([a-zA-Z\t\h]+)/) {
+          $contenido .= "<h1>$1</h1>";
+     }
+
+     #Los 5 siguientes me funcionan correctamente. Fallará si se ejecuta en ubuntu?
+     if($text =~ /\*\*\*([a-zA-Z\t\h]+)\*\*\*/) {
+          $contenido .= "<p><strong><em>$1</em></strong></p>";     
+     }
+     if($text =~ /\*\*([a-zA-Z\t\h]+)\*\*/) {
+          $contenido .= "<p><strong>$1</strong></p>";     
+     }
+     if($text =~ /\*([a-zA-Z\t\h]+)\*/) {
+          $contenido .= "<p><em>$1</em></p>";     
+     }
+
+     if($text =~ /~~([a-zA-Z\t\h]+)~~/) {
+          $contenido .= "<p><del>$1</del></p>";     
+     }
+     if($text =~ /\*\*([a-zA-Z\t\h]+)_([a-zA-Z\t\h]+)_([a-zA-Z\t\h]+)\*\*/) {
+          $contenido .= "<p><strong>$1<em>$2</em>$3</strong></p>";     
+     }
+
+     #FALLA: No reconoce el ejemplo del profesor : ``` git status ...
+     if($text =~ /```([a-zA-Z\t\h]+)```/) {
+          $contenido .= "<p><code>$1</code></p><br>";     
+     }
+
+     #Este regex solo reconoce la parte del texto que tiene el link. Ademas toma el estilo de general.css
+     if($text =~ /\[([a-zA-Z\t\h]+)\]\(([a-zA-Z\t\h\:\.\/]+)\)/) {
+          $contenido .= "<p><a href='$2'>$1</a></p><br>";     
+     }
+
+#Devolvemos el texto markdown en formato html
 print $q->header('text/html');
 print<<HTML;
 <!DOCTYPE html>
@@ -66,9 +75,25 @@ print<<HTML;
 </head>
 <body>
      <div class="wrap">
-           $final
+           $contenido
      </div>
 </body>
 </html>
 HTML
+
+}
+
+#Si los datos son incorrectos devolvemos un xml vacio
+else{
+print $q->header('text/xml');    
+print<<XML;
+<?xml version='1.0' encoding='utf-8'?>
+    <article>
+    </article>
+XML
+}
+
+
+
+
 

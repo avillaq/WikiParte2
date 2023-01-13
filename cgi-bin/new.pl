@@ -28,7 +28,7 @@ if (@array != 0) {
         $contenido = "<title>$titulo</title>
                     <text>$texto</text>";
     }
-    #Si queremos actualizar el texto con "false"
+    #Si queremos actualizar el texto con "false" (uptade.pl y new.pl son practicamente lo mismo, por eso ambos estan en este script )
     elsif($isNuevo eq "false"){
         #Existe el caso de que se ingrese usuarios que no tengan ningun articulo en la tabla articles,
         # entonces no habria nada que actualizar.
