@@ -23,31 +23,34 @@ my $form="";
 
 ##Las siguientes lineas pueden ser reducidas un poco mas, ya que hay codigo que se repite 
 if ($entrada eq "login") {
-    $form="<form action='./login.pl' method='post'>
-                <label>Usuario</label>
-                <input class='inputText' type='text' name='name' required>
+    $form="<h1>Login</h1>
+            <form action='./login.pl' method='post'>
+            <label>Usuario</label>
+            <input class='inputText' type='text' name='name' required>
 
-                <label>Contrasena</label>
-                <input class='inputText' type='password' name='password' required>
-                <br>";
+            <label>Contrasena</label>
+            <input class='inputText' type='password' name='password' required>
+            <br>";
 }
 elsif ($entrada eq "register") {
-    $form = "<form action='./register.pl' method='post'>
-                <label>Nombre</label>
-                <input type='text' class='inputText' name='newfirstname' required>
+    $form = "<h1>Register</h1>
+            <form action='./register.pl' method='post'>
+            <label>Nombre</label>
+            <input type='text' class='inputText' name='newfirstname' required>
                 
-                <label>Apellido</label>
-                <input type='text' class='inputText' name='newlastname' required>
+            <label>Apellido</label>
+            <input type='text' class='inputText' name='newlastname' required>
                 
-                <label>Nombre de usuario</label>
-                <input type='text' class='inputText' name='newname' required>
+            <label>Nombre de usuario</label>
+            <input type='text' class='inputText' name='newname' required>
                 
-                <label>Contrasena</label>
-                <input type='password' class='inputText' name='newpassword' required>
-                <br>";
+            <label>Contrasena</label>
+            <input type='password' class='inputText' name='newpassword' required>
+            <br>";
 }
 elsif ($entrada eq "new") {
-    $form = "<form action='./new.pl' method='post'>
+    $form = "<h1>New Page</h1>
+            <form action='./new.pl' method='post'>
             <label>Titulo</label>
             <input class='inputText' type='text' name='titulo' required>
 
@@ -60,13 +63,15 @@ elsif ($entrada eq "new") {
             <input type='hidden' name='esNuevo' value='true'>";
 }
 elsif ($entrada eq "list") {
-    $form = "<form action='./list.pl' method='post'>
+    $form = "<h1>List</h1>
+            <form action='./list.pl' method='post'>
             <label>Nombre de usuario</label>
             <input class='inputText' type='text' name='usuario' required>
             <br>";
 }
 elsif ($entrada eq "view") {
-    $form = "<form action='./view.pl' method='post'>
+    $form = "<h1>View</h1>
+            <form action='./view.pl' method='post'>
             <label>Nombre de usuario</label>
             <input class='inputText' type='text' name='usuario' required>
 
@@ -75,7 +80,8 @@ elsif ($entrada eq "view") {
             <br>";
 }
 elsif ($entrada eq "delete") {
-    $form = "<form action='./delete.pl' method='post'>
+    $form = "<h1>Delete</h1>
+            <form action='./delete.pl' method='post'>
             <label>Nombre de usuario</label>
             <input class='inputText' type='text' name='usuario' required>
 
@@ -84,7 +90,8 @@ elsif ($entrada eq "delete") {
             <br>";
 }
 elsif ($entrada eq "article") {
-    $form = "<form action='./article.pl' method='post'>
+    $form = "<h1>Article</h1>
+            <form action='./article.pl' method='post'>
             <label>Nombre de usuario</label>
             <input class='inputText' type='text' name='usuario' required>
 
@@ -93,7 +100,8 @@ elsif ($entrada eq "article") {
             <br>";
 }
 elsif ($entrada eq "update") {
-    $form = "<form action='./new.pl' method='post'>
+    $form = "<h1>Update</h1>
+            <form action='./new.pl' method='post'>
             <label>Titulo</label>
             <input class='inputText' type='text' name='titulo' required>
 
